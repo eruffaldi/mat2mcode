@@ -127,6 +127,11 @@ function str = genstrarray(stritem)
 % generate a cell string of properly quoted strings suitable for code
 % generation.
 str = strrep(stritem, '''', '''''');
+% \r\n => \\r\\n \n
+% \r   => \\r \n
+str = strrep(str,[char(13) char(10)],[''' char(13) char(10) ...' char(13) char(10) '''']);
+%str = strrep(str,char(10),''' char(10) ''');
+%str = strrep(str,char(13),''' char(13) ''');
 for k = 1:numel(str)
-    str{k} = sprintf('''%s''', str{k});
+    str{k} = sprintf('[''%s'']', str{k});
 end
